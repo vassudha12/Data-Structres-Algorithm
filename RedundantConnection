@@ -1,0 +1,101 @@
+/*Redundant Connection -I
+Approach:
+
+This is basically the brute force approach.
+The idea is to use one edge less from the end each time and to check whether it can make the graph to break into two connected components.
+Also for ease, we can store the edges in zero-based indexing.
+Algorithm:
+
+Take an integer variable ‘N’  equal to the size of the edges array ‘Arr’.
+Also, store the value of ‘N’ into ‘M’
+Now till N not equal to 1 do the following steps:
+Create an Adjacency list ‘Adj’.
+Iterate over the edges array ‘Arr’ from i=0 to i=M and each time take one edge less from the end that is if i == N-1 do not push that edge in the Adjacency list otherwise push all the edges in the adjacency list.
+Now decrement N by one.
+Now call the depth-first search on the Adjcancy list ‘Adj’ to count the number of connected components.
+If connected components = 1 then return the edge {Arr[N][0] , Arr[N][1]};
+If no edge is returned from the above operations return {0, 0} i.e empty vector.
+Time Complexity
+ O(N^2), Where ‘N’ is the number of nodes in the graph.  
+
+ 
+
+Traversing over the array of edges will take O(N) time and calling depth-first search on the graph every time with one edge less will take O(N^2) time. Thus total time complexity will be  O(N^2) time.
+
+Space Complexity
+O(N), Where ‘N’ is the number of nodes in the graph. 
+
+ 
+
+Since we are forming the adjacency list with atmost ‘N’ nodes.*/
+
+import java.util.ArrayList;
+
+public class RedundantConnection {
+	private static void dfs(ArrayList<Boolean> visited, ArrayList<ArrayList<Integer>> adj, int src) {
+
+		visited.set(src, true);
+		for (int neighbour : adj.get(src)) {
+			if (visited.get(neighbour) == false) {
+				dfs(visited, adj, neighbour);
+			}
+		}
+	}
+
+	public static ArrayList<Integer> redundantConnection(ArrayList<ArrayList<Integer>> arr) {
+
+		int n = arr.size();
+		int m = n;
+
+		// Take one edge less from the end each time while making a graph
+		while (n != -1) {
+
+			// Create a adjacency List to store the graph
+			ArrayList<ArrayList<Integer>> adj = new ArrayList<ArrayList<Integer>>(m);
+			for (int i = 0; i < m; i++) {
+				ArrayList<Integer> temp = new ArrayList<Integer>();
+				adj.add(temp);
+			}
+			for (int i = 0; i < m; i++) {
+
+				// Skip the last edge
+				if (i == n - 1) {
+					continue;
+				}
+
+				adj.get(arr.get(i).get(0) - 1).add(arr.get(i).get(1) - 1);
+				adj.get(arr.get(i).get(1) - 1).add(arr.get(i).get(0) - 1);
+
+			}
+			n--;
+
+			// Perform the DFS to count the connected components in the graph
+			int connectedComponentsCount = 0;
+			ArrayList<Boolean> visited = new ArrayList<Boolean>(m);
+			for (int i = 0; i < m; i++) {
+				visited.add(false);
+			}
+
+			for (int i = 0; i < m; i++) {
+				if (visited.get(i) == false) {
+					dfs(visited, adj, i);
+					connectedComponentsCount++;
+				}
+			}
+
+			// If count of connected components is equal to one then tree is formed and
+			// retun that edge
+			if (connectedComponentsCount == 1) {
+				ArrayList<Integer> ans = new ArrayList<Integer>();
+				ans.add(arr.get(n).get(0));
+				ans.add(arr.get(n).get(1));
+				return ans;
+			}
+		}
+
+		ArrayList<Integer> ans = new ArrayList<Integer>();
+		ans.add(0);
+		ans.add(0);
+		return ans;
+	}
+}
