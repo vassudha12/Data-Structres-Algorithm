@@ -1,0 +1,99 @@
+import java.util.*;
+public class SparseMatrixMultiplication {
+	
+	public int[][] multiply(int[][] A, int[][] B) {
+	    //validity check
+		 if (validate(A, B)) {
+	            return new int[][]{};
+	        }
+	 
+	    int[][] C = new int[A.length][B[0].length];
+	 
+	    for(int i=0; i<C.length; i++){
+	        for(int j=0; j<C[0].length; j++){
+	            int sum=0;
+	            for(int k=0; k<A[0].length; k++){
+	                sum += A[i][k]*B[k][j];
+	            }
+	            C[i][j] = sum;
+	        }
+	    }
+	 
+	    return C;
+	   
+	}
+	
+	  private boolean validate(int[][] A, int[][] B) {
+	        if (A == null || B == null) return true;
+	        if (A[0].length != B.length) return true;
+	        return false;
+	    }
+	
+//
+//	public int[][] multiply(int[][] A, int[][] B) {
+//	    //validity check
+//	 
+//	    int[][] C = new int[A.length][B[0].length];
+//	 
+//	    for(int i=0; i<C.length; i++){
+//	        for(int k=0; k<A[0].length; k++){
+//	            if(A[i][k]!=0){
+//	                for(int j=0; j<C[0].length; j++){
+//	                    C[i][j] += A[i][k]*B[k][j];
+//	                }
+//	            }
+//	        }
+//	    }
+//	 
+//	    return C;
+//	}
+	public void display(int[][]C)
+	{
+		 for(int []x:C){
+	            for(int y:x){
+	            System.out.print(y+"        ");
+	            }
+	            System.out.println();
+	        }
+	}
+	
+	
+	
+	public static void main(String[] args)
+	{
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter rows and coloumns of A:");
+		int rowA=sc.nextInt();
+	    int coloumnA=sc.nextInt();
+		System.out.println("Enter elements of matrix A:");
+		int[][] A=new int[rowA][coloumnA];
+		
+		 for(int i=0; i<rowA;i++)
+         {            
+            for(int j=0; j<coloumnA;j++)
+            {
+                A[i][j]=sc.nextInt();
+            }
+         }
+		
+		 
+		 System.out.println("Enter rows and coloumns of B:");
+			int rowB=sc.nextInt();
+		    int columnB=sc.nextInt();
+			System.out.println("Enter elements of matrix B:");
+			int[][] B=new int[rowB][columnB];
+			
+			 for(int i=0; i<rowB;i++)
+	         {            
+	            for(int j=0; j<columnB;j++)
+	            {
+	                B[i][j]=sc.nextInt();
+	            }
+	         }
+			 
+			 SparseMatrixMultiplication ob =new SparseMatrixMultiplication();
+			 int[][]C=ob.multiply(A, B);
+			 ob.display(C);
+			
+	}
+}
