@@ -1,0 +1,61 @@
+//WAP to find the number of brackets required to balance the string
+import java.util.*;
+public class BalancedBrackets {
+	public static void minimumParentheses(String pattern) {
+		// To store count of "("
+		int openBr = 0;
+
+		// To store count of ")"
+		int closeBr = 0;
+
+		// Count of minimum parentheses required
+		int count = 0;
+	
+
+		for (int i = 0; i < pattern.length(); i++)
+		{
+			if (pattern.charAt(i) == '(')
+			{	
+				++openBr;
+				//System.out.println(i+","+count+","+closeBr+","+openBr);
+			} 
+			else {
+				
+				++closeBr;
+				//System.out.println(i+","+count+","+closeBr+","+openBr);
+			}
+
+			// If ")" is greater than "("
+			if (closeBr > openBr) 
+			{
+				count += (closeBr - openBr);
+				//System.out.println(i+","+count+","+closeBr+","+openBr);
+				openBr = 0;
+				closeBr = 0;
+				
+			}
+		}
+
+		count += (openBr - closeBr);
+
+		
+
+		System.out.println( "Final:" +count);
+	}
+	
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+        System.out.println("Enter String:");
+
+        String pattern = sc.nextLine();
+        
+        BalancedBrackets ob=new BalancedBrackets();
+        
+        ob.minimumParentheses(pattern);
+        
+
+	}
+
+}
