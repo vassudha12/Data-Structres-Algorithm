@@ -1,0 +1,175 @@
+
+public class DQS {
+	
+	class Dnode{
+		    int value;
+		    Dnode next;
+		    Dnode prev;
+		}
+		 class Deque{
+		    private Dnode head;
+		    private Dnode tail;
+		    
+		     public Deque()
+		    {
+		        head = tail = null;
+		    }
+		    boolean isEmpty()
+		    {
+		        if (head == null)
+		            return true;
+		        else    
+		        return false;
+		    }
+		    boolean isFull()
+		    {
+		        if(head==tail)
+		            return true;
+		        else
+		            return false;
+		    }
+		    
+		    int size()
+		    {
+		        if(!isEmpty())
+		        {
+		            Dnode temp=head;
+		            int len=0;
+		            while(temp!=null)
+		            {
+		                len++;
+		                temp=temp.next;
+		            }
+		            return len;
+		        }   
+		        else
+		            return 0;
+		    }
+		    
+		    void insert_first(int element)
+		    {
+		         
+		        // Allocating node of DQueNode type
+		        Dnode temp = new Dnode();
+		        temp.value = element;
+		 
+		        // If the element is first element
+		        if (head == null)
+		        {
+		            head = tail = temp;
+		            temp.next = temp.prev = null;
+		        }
+		        else
+		        {
+		            head.prev = temp;
+		            temp.next = head;
+		            temp.prev = null;
+		            head = temp;
+		        }
+		    }
+		    
+		    void insert_last(int element)
+		    {
+		         
+		        // Allocating node of DQueNode type
+		        Dnode temp = new Dnode();
+		        temp.value = element;
+		 
+		        // If element is the first element
+		        if (head == null)
+		        {
+		            head = tail = temp;
+		            temp.next = temp.prev = null;
+		        }
+		        else
+		        {
+		            tail.next = temp;
+		            temp.next = null;
+		            temp.prev = tail;
+		            tail = temp;
+		        }
+		    }
+		    void remove_first()
+		    {
+		         
+		        // If list is not empty
+		        if (!isEmpty())
+		        {
+		            Dnode temp = head;
+		            head = head.next;
+		            head.prev = null;
+		 
+		            return;
+		        }
+		        System.out.print("List is Empty");
+		    }
+		 
+		    // Remove element at the last position
+		    void remove_last()
+		    {
+		         
+		        // If list is not empty
+		        if (!isEmpty())
+		        {
+		            Dnode temp = tail;
+		            tail = tail.prev;
+		            tail.next = null;
+		 
+		            return;
+		        }
+		        System.out.print("List is Empty");
+		    }
+		 
+		    
+		}
+
+		public class Stack {
+			// Initialize your data structure.
+		    Deque d=new Deque();
+			Stack() {
+				
+			}
+
+			// Pushes 'X' into the stack. Returns true if it gets pushed into the stack, and false otherwise.
+			public boolean push(int x) {
+		        if(d.isFull())
+		            return false;
+		         else{
+		        d.insert_last(x);
+		        return true;
+		         }
+			}
+
+			// Pops top element from Stack. Returns -1 if the stack is empty, otherwise returns the popped element.
+			public int pop() {
+				// Write your code here.
+		        if(d.isEmpty())
+		        d.remove_last();
+		       return -1;
+				
+			}
+
+			// Returns the topmost element of the stack. In case the stack is empty, it returns -1.
+//			public int top() {
+//				if(!d.isEmpty())
+//		            return d;
+//		        else
+//		            return -1;
+//			}
+
+			// Returns true if the stack is empty, otherwise false.
+			public boolean isEmpty() {
+				if(d.isEmpty())
+		            return true;
+		        else
+		            return false;
+			}
+
+			// Returns the number of elements currently present in the stack.
+			public int size() {
+				// Write your code here.
+		        return d.size();
+			}
+		}
+
+}
